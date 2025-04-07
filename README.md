@@ -1,6 +1,6 @@
 # Projeto Blog Pessoal - Backend Spring Boot
 **README.md**  
-*(Projeto Blog Pessoal - Backend Spring Boot)*  
+*Projeto Blog Pessoal - Backend Spring Boot*  
 
 ---
 
