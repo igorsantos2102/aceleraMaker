@@ -1,6 +1,5 @@
 # Projeto Blog Pessoal - Backend Spring Boot
 
----
 
 ### **Sobre o Projeto**  
 Este projeto faz parte do **Programa Acelera Maker** da empresa **Montreal**, com o objetivo de consolidar conhecimentos em Spring Boot, segurança de APIs, persistência de dados e boas práticas de desenvolvimento. Trata-se de um backend para um sistema de blog pessoal, com funcionalidades de gestão de usuários, postagens, temas e autenticação via JWT.  
