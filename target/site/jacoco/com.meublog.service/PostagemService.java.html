@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PostagemService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">blog</a> &gt; <a href="index.source.html" class="el_package">com.meublog.service</a> &gt; <span class="el_source">PostagemService.java</span></div><h1>PostagemService.java</h1><pre class="source lang-java linenums">package com.meublog.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.meublog.model.Postagem;
+import com.meublog.model.Tema;
+import com.meublog.model.Usuario;
+import com.meublog.repository.PostagemRepository;
+import com.meublog.repository.TemaRepository;
+import com.meublog.repository.UsuarioRepository;
+
+import java.util.List;
+
+
+@Service
+@Transactional
+<span class="fc" id="L21">public class PostagemService {</span>
+    @Autowired
+    private PostagemRepository repository;
+
+    @Autowired
+    private UsuarioRepository usuarioRepository;
+
+    @Autowired
+    private TemaRepository temaRepository;
+
+    public Postagem criar(Postagem postagem) {
+<span class="nc" id="L32">        Usuario usuario = usuarioRepository.findById(postagem.getUsuario().getId())</span>
+<span class="nc" id="L33">            .orElseThrow(() -&gt; new RuntimeException(&quot;Usuário não encontrado&quot;));</span>
+<span class="nc" id="L34">        Tema tema = temaRepository.findById(postagem.getTema().getId())</span>
+<span class="nc" id="L35">            .orElseThrow(() -&gt; new RuntimeException(&quot;Tema não encontrado&quot;));</span>
+<span class="nc" id="L36">        postagem.setUsuario(usuario);</span>
+<span class="nc" id="L37">        postagem.setTema(tema);</span>
+<span class="nc" id="L38">        return repository.save(postagem);</span>
+    }
+
+    // Buscar todas as postagens
+    @Transactional(readOnly = true) 
+    public List&lt;Postagem&gt; listarTodas() {
+<span class="nc" id="L44">        return repository.findAll();</span>
+    }
+
+    // Buscar por ID
+    public Postagem buscarPorId(Long id) {
+<span class="nc" id="L49">        return repository.findById(id)</span>
+<span class="nc" id="L50">            .orElseThrow(() -&gt; new RuntimeException(&quot;Postagem não encontrada&quot;));</span>
+    }
+
+    // Atualizar postagem
+    public Postagem atualizar(Long id, Postagem postagemAtualizada) {
+<span class="nc" id="L55">        Postagem postagem = buscarPorId(id);</span>
+<span class="nc" id="L56">        postagem.setTitulo(postagemAtualizada.getTitulo());</span>
+<span class="nc" id="L57">        postagem.setTexto(postagemAtualizada.getTexto());</span>
+<span class="nc" id="L58">        postagem.setTema(postagemAtualizada.getTema());</span>
+<span class="nc" id="L59">        return repository.save(postagem);</span>
+    }
+
+    // Excluir postagem
+    public void excluir(Long id) {
+<span class="nc" id="L64">        Postagem postagem = buscarPorId(id);</span>
+<span class="nc" id="L65">        repository.delete(postagem);</span>
+<span class="nc" id="L66">    }</span>
+    
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

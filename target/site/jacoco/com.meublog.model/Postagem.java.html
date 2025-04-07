@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Postagem.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">blog</a> &gt; <a href="index.source.html" class="el_package">com.meublog.model</a> &gt; <span class="el_source">Postagem.java</span></div><h1>Postagem.java</h1><pre class="source lang-java linenums">package com.meublog.model;
+
+import lombok.Data;
+
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+import lombok.AllArgsConstructor;
+import java.time.LocalDateTime;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.NotBlank;
+
+<span class="nc bnc" id="L18" title="All 54 branches missed.">@Data </span>
+<span class="nc" id="L19">@Builder</span>
+<span class="fc" id="L20">@NoArgsConstructor</span>
+<span class="nc" id="L21">@AllArgsConstructor</span>
+@Entity
+public class Postagem {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+<span class="nc" id="L26">    private Long id;</span>
+
+    @NotBlank(message = &quot;Título obrigatório&quot;)
+<span class="nc" id="L29">    private String titulo;</span>
+
+    @NotBlank(message = &quot;Texto obrigatório&quot;)
+<span class="nc" id="L32">    private String texto;</span>
+
+<span class="pc" id="L34">    private LocalDateTime data = LocalDateTime.now();</span>
+
+    @ToString.Exclude
+    @ManyToOne
+    @JoinColumn(name = &quot;usuario_id&quot;)
+<span class="nc" id="L39">    private Usuario usuario;</span>
+
+    @ToString.Exclude
+    @ManyToOne
+    @JoinColumn(name = &quot;tema_id&quot;)
+<span class="nc" id="L44">    private Tema tema;</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

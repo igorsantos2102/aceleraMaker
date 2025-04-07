@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>JwtUtils.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">blog</a> &gt; <a href="index.source.html" class="el_package">com.meublog.security</a> &gt; <span class="el_source">JwtUtils.java</span></div><h1>JwtUtils.java</h1><pre class="source lang-java linenums">package com.meublog.security;
+
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import java.util.Date;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+@Component // Anotação obrigatória para que o Spring gerencie o bean
+<span class="fc" id="L12">public class JwtUtils {</span>
+
+    @Value(&quot;${jwt.secret}&quot;) // Chave secreta definida no application.properties
+    private String secret;
+
+<span class="fc" id="L17">    private final long EXPIRATION = 86400000; // 24 horas em milissegundos</span>
+
+    public String generateToken(String email) {
+<span class="nc" id="L20">        return Jwts.builder()</span>
+<span class="nc" id="L21">                .setSubject(email)</span>
+<span class="nc" id="L22">                .setIssuedAt(new Date())</span>
+<span class="nc" id="L23">                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION))</span>
+<span class="nc" id="L24">                .signWith(SignatureAlgorithm.HS512, secret)</span>
+<span class="nc" id="L25">                .compact();</span>
+    }
+
+    public boolean validateToken(String token) {
+        try {
+<span class="nc" id="L30">            Jwts.parser().setSigningKey(secret).parseClaimsJws(token);</span>
+<span class="nc" id="L31">            return true;</span>
+<span class="nc" id="L32">        } catch (Exception e) {</span>
+<span class="nc" id="L33">            return false;</span>
+        }
+    }
+
+    public String getEmailFromToken(String token) {
+<span class="nc" id="L38">        return Jwts.parser()</span>
+<span class="nc" id="L39">                .setSigningKey(secret)</span>
+<span class="nc" id="L40">                .parseClaimsJws(token)</span>
+<span class="nc" id="L41">                .getBody()</span>
+<span class="nc" id="L42">                .getSubject();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>
