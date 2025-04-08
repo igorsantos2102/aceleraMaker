@@ -23,10 +23,10 @@ import com.meublog.service.UsuarioService;
 public class SecurityConfig {
 
     @Autowired
-    private JwtUtils jwtUtils; // Injeta o JwtUtils
+    private JwtUtils jwtUtils; 
 
     @Autowired
-    private UserDetailsService userDetailsService; // Injeta o UserDetailsService
+    private UserDetailsService userDetailsService; 
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -37,18 +37,18 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/api/usuarios/login").permitAll()
                 .anyRequest().authenticated())
-            .addFilterBefore(authTokenFilter(), UsernamePasswordAuthenticationFilter.class); // Usa o método authTokenFilter()
+            .addFilterBefore(authTokenFilter(), UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 
     @Bean
     public AuthTokenFilter authTokenFilter() {
-        return new AuthTokenFilter(jwtUtils, userDetailsService); // Usa os beans injetados
+        return new AuthTokenFilter(jwtUtils, userDetailsService); 
     }
 
     @Bean
     public UserDetailsService userDetailsService(UsuarioService usuarioService) {
-        return usuarioService; // Registra o UsuarioService como UserDetailsService
+        return usuarioService; 
     }
 
     @Bean

@@ -8,13 +8,13 @@ import java.util.Date;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-@Component // Anotação obrigatória para que o Spring gerencie o bean
+@Component 
 public class JwtUtils {
 
-    @Value("${jwt.secret}") // Chave secreta definida no application.properties
+    @Value("${jwt.secret}") 
     private String secret;
 
-    private final long EXPIRATION = 86400000; // 24 horas em milissegundos
+    private final long EXPIRATION = 86400000; 
 
     public String generateToken(String email) {
         return Jwts.builder()
